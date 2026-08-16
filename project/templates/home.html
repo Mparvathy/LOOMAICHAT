@@ -260,7 +260,7 @@
     <div class="nav-logo">🧵 <span>Loom</span></div>
     <div class="nav-links">
         <a href="/login/" class="nav-login">Login</a>
-        <a href="/register/" class="nav-register">Create Account</a>
+        <a href="{% url 'register' %}" class="nav-register">Create Account</a>
     </div>
 </nav>
 
@@ -276,7 +276,7 @@
 
     <div class="buttons">
         <a href="/login/" class="btn login">Login</a>
-        <a href="/register/" class="btn register">Create Account</a>
+        <a href="{% url 'register' %}" class="btn register">Create Account</a>
     </div>
 
 </div>

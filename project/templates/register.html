@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loom - Create Account</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background:
+                radial-gradient(circle at 12% 8%, rgba(99,102,241,0.14), transparent 42%),
+                radial-gradient(circle at 88% 92%, rgba(37,99,235,0.14), transparent 42%),
+                linear-gradient(180deg, #f5f7fb 0%, #eef1fb 100%);
+            color: #1e293b;
+        }
+
+        /* ---------- Nav ---------- */
+        nav {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2vh 64px;
+            flex-shrink: 0;
+        }
+
+        .nav-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #1e293b;
+        }
+
+        .nav-logo span {
+            background: linear-gradient(90deg, #2563eb, #6366f1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .nav-links a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .nav-links a:hover { text-decoration: underline; }
+
+        /* ---------- Form section ---------- */
+        .wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 24px 40px 24px;
+        }
+
+        .card {
+            width: 460px;
+            max-width: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 44px 40px;
+            box-shadow: 0 20px 60px rgba(30, 41, 90, 0.10), 0 2px 8px rgba(30, 41, 90, 0.06);
+            border: 1px solid rgba(37, 99, 235, 0.08);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            padding: 5px 14px;
+            border-radius: 999px;
+            margin-bottom: 16px;
+        }
+
+        .card h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 26px;
+            margin-bottom: 6px;
+        }
+
+        .card .sub {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .row-two {
+            display: flex;
+            gap: 14px;
+        }
+        .row-two .field { flex: 1; }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            color: #475569;
+            margin-bottom: 6px;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 12px 14px;
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            color: #1e293b;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+        }
+
+        .field input::placeholder { color: #94a3b8; }
+
+        .field input:focus {
+            border-color: #2563eb;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        .field input.field-error {
+            border-color: #fca5a5;
+            background: #fff5f5;
+        }
+
+        .message {
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .message.show { display: block; }
+
+        .message.error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+        }
+        .message.error ul { list-style: none; padding-left: 0; margin-top: 4px; }
+        .message.error li { margin-bottom: 3px; }
+        .message.error li:last-child { margin-bottom: 0; }
+
+        .message.success {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #15803d;
+        }
+
+        button.submit {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            color: white;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+            transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+        }
+
+        button.submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px rgba(37, 99, 235, 0.32);
+        }
+        button.submit:active { transform: translateY(0); }
+        button.submit:focus-visible {
+            outline: 2px solid #1e293b;
+            outline-offset: 2px;
+        }
+        button.submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .foot {
+            margin-top: 22px;
+            text-align: center;
+            font-size: 13px;
+            color: #64748b;
+        }
+        .foot a {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .foot a:hover { text-decoration: underline; }
+
+        @media (max-width: 560px) {
+            nav { padding: 20px 24px; }
+            .card { padding: 32px 24px; }
+            .row-two { flex-direction: column; gap: 0; }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <a href="/" class="nav-logo">🧵 <span>Loom</span></a>
+    <div class="nav-links">
+        Already have an account? <a href="/login/">Login</a>
+    </div>
+</nav>
+
+<div class="wrap">
+    <div class="card">
+
+        <div class="badge">✦ AI-POWERED</div>
+        <h1>Create your account</h1>
+        <p class="sub">Fill in your details to start your first thread.</p>
+
+        <div id="message" class="message"></div>
+
+        <form id="registerForm" novalidate>
+            {% csrf_token %}
+
+            <div class="field">
+                <label for="id_full_name">Full Name</label>
+                <input type="text" name="full_name" id="id_full_name" placeholder="Jane Doe" autocomplete="name" required>
+            </div>
+
+            <div class="field">
+                <label for="id_username">Username</label>
+                <input type="text" name="username" id="id_username" placeholder="janedoe" autocomplete="username" required>
+            </div>
+
+            <div class="field">
+                <label for="id_email">Email</label>
+                <input type="email" name="email" id="id_email" placeholder="jane@example.com" autocomplete="email" required>
+            </div>
+
+            <div class="field">
+                <label for="id_phone">Phone Number</label>
+                <input type="tel" name="phone" id="id_phone" placeholder="+91 98765 43210" autocomplete="tel" required>
+            </div>
+
+            <div class="row-two">
+                <div class="field">
+                    <label for="id_password1">Password</label>
+                    <input type="password" name="password" id="id_password1" placeholder="••••••••" autocomplete="new-password" required>
+                </div>
+                <div class="field">
+                    <label for="id_password2">Confirm</label>
+                    <input type="password" name="password2" id="id_password2" placeholder="••••••••" autocomplete="new-password" required>
+                </div>
+            </div>
+
+            <button type="submit" class="submit" id="submitBtn">Create account</button>
+        </form>
+
+        <p class="foot">Already have an account? <a href="/login/">Sign in</a></p>
+
+    </div>
+</div>
+
+<script>
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+}
+
+const form = document.getElementById('registerForm');
+const messageBox = document.getElementById('message');
+const submitBtn = document.getElementById('submitBtn');
+
+function clearFieldErrors() {
+    form.querySelectorAll('.field-error').forEach(el => el.classList.remove('field-error'));
+}
+
+function showMessage(type, html) {
+    messageBox.className = 'message show ' + type;
+    messageBox.innerHTML = html;
+}
+
+function hideMessage() {
+    messageBox.className = 'message';
+    messageBox.innerHTML = '';
+}
+
+form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    hideMessage();
+    clearFieldErrors();
+
+    const payload = {
+        full_name: document.getElementById('id_full_name').value.trim(),
+        username: document.getElementById('id_username').value.trim(),
+        email: document.getElementById('id_email').value.trim(),
+        phone: document.getElementById('id_phone').value.trim(),
+        password: document.getElementById('id_password1').value,
+        password2: document.getElementById('id_password2').value,
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Creating account…';
+
+    try {
+        const response = await fetch('/api/register/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: JSON.stringify(payload),
+        });
+
+        // Safely try to parse JSON (handles empty body or HTML error pages)
+        let data = {};
+        try {
+            data = await response.json();
+        } catch (parseErr) {
+            // response was not JSON
+            if (response.ok) {
+                // Server succeeded but returned no/invalid JSON → treat as success
+                showMessage('success', 'Account created! Redirecting you to login…');
+                setTimeout(() => { window.location.href = '/login/'; }, 1200);
+                return;
+            }
+            throw parseErr; // real error
+        }
+
+        if (response.ok) {
+            showMessage('success', data.detail || 'Account created! Redirecting you to login…');
+            setTimeout(() => { window.location.href = '/login/'; }, 1200);
+        } else {
+            // validation errors from serializer
+            const items = [];
+            for (const field in data) {
+                const input = document.getElementById('id_' + (field === 'password' ? 'password1' : field));
+                if (input) input.classList.add('field-error');
+                const label = field.charAt(0).toUpperCase() + field.slice(1).replace('_', ' ');
+                const messages = Array.isArray(data[field]) ? data[field] : [data[field]];
+                messages.forEach(msg => items.push(`<li>${label}: ${msg}</li>`));
+            }
+            showMessage('error', items.length ? `<ul>${items.join('')}</ul>` : (data.detail || 'Something went wrong. Please try again.'));
+        }
+    } catch (err) {
+        console.error(err); 
+        showMessage('error', 'Could not reach the server. Please check your connection and try again.');
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Create account';
+    }
+});
+
+</script>
+
+</body>
+</html>
