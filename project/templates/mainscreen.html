@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loom - Home</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            display: flex;
+            background: #f8fafc;
+            color: #1e293b;
+            overflow: hidden;
+        }
+
+        /* ========== SIDEBAR ========== */
+        .sidebar {
+            width: 280px;
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px 18px 16px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #1e293b;
+            margin-bottom: 18px;
+        }
+
+        .logo span {
+            background: linear-gradient(90deg, #2563eb, #6366f1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-new-chat {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 14px;
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .btn-new-chat:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.32);
+        }
+
+        /* Chat list */
+        .chat-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px 10px;
+        }
+
+        .chat-list-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #94a3b8;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            padding: 8px 10px 6px;
+        }
+
+        .chat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.15s ease;
+            margin-bottom: 2px;
+        }
+
+        .chat-item:hover {
+            background: #f1f5f9;
+        }
+
+        .chat-item.active {
+            background: #eff6ff;
+        }
+
+        .chat-item .icon {
+            width: 32px;
+            height: 32px;
+            background: #e0e7ff;
+            color: #4f46e5;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .chat-item .info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .chat-item .title {
+            font-size: 13.5px;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-item .time {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        /* Profile section at bottom */
+        .sidebar-footer {
+            padding: 14px 12px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .profile-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+
+        .profile-card:hover {
+            background: #f8fafc;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #2563eb, #6366f1);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        .profile-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .profile-name {
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .profile-email {
+            font-size: 12px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 6px;
+            transition: color 0.15s, background 0.15s;
+        }
+        .logout-btn:hover {
+            color: #ef4444;
+            background: #fef2f2;
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 80% 20%, rgba(99,102,241,0.07), transparent 40%),
+                radial-gradient(circle at 20% 80%, rgba(37,99,235,0.06), transparent 40%),
+                #f8fafc;
+        }
+
+        .main-header {
+            padding: 18px 32px;
+            border-bottom: 1px solid #e2e8f0;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .main-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .main-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Welcome card */
+        .welcome {
+            max-width: 680px;
+            width: 100%;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .welcome-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 999px;
+            margin-bottom: 18px;
+        }
+
+        .welcome h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.25;
+        }
+
+        .welcome h1 span {
+            background: linear-gradient(90deg, #2563eb, #6366f1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome p {
+            color: #64748b;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 36px;
+        }
+
+        /* Feature cards */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            width: 100%;
+            max-width: 780px;
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 22px 18px;
+            text-align: left;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(30, 41, 90, 0.08);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: #eff6ff;
+            color: #2563eb;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-bottom: 14px;
+        }
+
+        .feature-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .feature-card p {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .sidebar { width: 240px; }
+            .features { grid-template-columns: 1fr; }
+            .main-body { padding: 24px 16px; }
+            .welcome h1 { font-size: 26px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== SIDEBAR ========== -->
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <a href="/" class="logo">🧵 <span>Loom</span></a>
+        <button class="btn-new-chat" onclick="startNewChat()">
+            <span>＋</span> New Chat
+        </button>
+    </div>
+
+    <div class="chat-list">
+        <div class="chat-list-title">Recent chats</div>
+
+        <!-- Sample chats (replace with real data later) -->
+        <div class="chat-item active" onclick="selectChat(this)">
+            <div class="icon">💬</div>
+            <div class="info">
+                <div class="title">Welcome to Loom</div>
+                <div class="time">Just now</div>
+            </div>
+        </div>
+
+        <div class="chat-item" onclick="selectChat(this)">
+            <div class="icon">💡</div>
+            <div class="info">
+                <div class="title">How to write better prompts</div>
+                <div class="time">2 hours ago</div>
+            </div>
+        </div>
+
+        <div class="chat-item" onclick="selectChat(this)">
+            <div class="icon">📝</div>
+            <div class="info">
+                <div class="title">Summarize meeting notes</div>
+                <div class="time">Yesterday</div>
+            </div>
+        </div>
+
+        <div class="chat-item" onclick="selectChat(this)">
+            <div class="icon">🚀</div>
+            <div class="info">
+                <div class="title">Project ideas brainstorm</div>
+                <div class="time">3 days ago</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile -->
+    <div class="sidebar-footer">
+        <div class="profile-card">
+            <div class="avatar" id="userAvatar">U</div>
+            <div class="profile-info">
+                <div class="profile-name" id="userName">User</div>
+                <div class="profile-email" id="userEmail">Loading...</div>
+            </div>
+            <button class="logout-btn" title="Logout" onclick="logout()">
+                ⎋
+            </button>
+        </div>
+    </div>
+</aside>
+
+<!-- ========== MAIN ========== -->
+<main class="main">
+    <div class="main-header">
+        <h2>Home</h2>
+    </div>
+
+    <div class="main-body">
+        <div class="welcome">
+            <div class="welcome-badge">✦ AI-POWERED</div>
+            <h1>Welcome to <span>Loom</span></h1>
+            <p>
+                Your intelligent conversation partner. Start a new chat, explore ideas,
+                get summaries, or just talk — Loom is ready when you are.
+            </p>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Smart Conversations</h3>
+                    <p>Chat naturally and get thoughtful, context-aware responses every time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Fast & Focused</h3>
+                    <p>Clean interface designed to help you think and create without distraction.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Private by Design</h3>
+                    <p>Your chats stay with you. We respect your privacy and data.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    // Load user info from localStorage
+    const username = localStorage.getItem('loom_username') || 'User';
+    const token = localStorage.getItem('loom_token');
+    if (!token) {
+        window.location.href = '/login/';
+    }
+
+    // Fill profile
+    document.getElementById('userName').textContent = username;
+    document.getElementById('userEmail').textContent = '@' + username;
+    document.getElementById('userAvatar').textContent = username.charAt(0).toUpperCase();
+
+    function startNewChat() {
+        // Later you can redirect to /chat/new/ or clear the main area
+        alert('New chat will open here (connect this to your chat view later)');
+    }
+
+    function selectChat(el) {
+        document.querySelectorAll('.chat-item').forEach(item => item.classList.remove('active'));
+        el.classList.add('active');
+        // Later: load that chat into the main area
+    }
+
+    function logout() {
+        localStorage.removeItem('loom_token');
+        localStorage.removeItem('loom_username');
+        window.location.href = '/login/';
+    }
+</script>
+
+</body>
+</html>

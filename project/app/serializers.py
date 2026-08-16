@@ -23,12 +23,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         if User.objects.filter(email=value).exists():
             raise serializers.ValidationError("That email is already registered.")
         return value
-
     def validate_phone(self, value):
         if User.objects.filter(phone=value).exists():
             raise serializers.ValidationError("That phone number is already registered.")
         return value
-
     def create(self, validated_data):
         validated_data.pop('password2')
         password = validated_data.pop('password')
@@ -44,7 +42,6 @@ class RegisterSerializer(serializers.ModelSerializer):
 #         fields = ['id', 'username', 'full_name', 'email', 'phone']
 #         read_only_fields = ['id', 'username']
 
-
-# class LoginSerializer(serializers.Serializer):
-#     username = serializers.CharField()
-#     password = serializers.CharField(write_only=True)
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField(write_only=True)
